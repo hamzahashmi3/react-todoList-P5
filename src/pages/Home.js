@@ -7,19 +7,22 @@ import Footer from "../components/Footer";
 const Home = (props) => {
   const [notes, setNotes] = useState([]);
 
+  const saveToLocalStorage = (items) => {
+    localStorage.setItem("ToDoList", JSON.stringify(items))
+  }
+
   const addNotes = (newNote) => {
-    setNotes((prevNotes) => {
-      return [...prevNotes, newNote];
-    });
-    console.log(notes);
+    const prevNotes = [...notes, newNote];
+    setNotes(prevNotes);
+    saveToLocalStorage(prevNotes)
   };
 
   const onDelete = (id) => {
-    setNotes((prevNotes) => {
-      return prevNotes.filter((noteItem, index) => {
-        return index !== id;
-      });
+    const prevNotes = notes.filter((noteItem, index) => {
+      return index !== id;
     });
+    setNotes(prevNotes)
+    saveToLocalStorage(prevNotes)
   };
 
   return (
